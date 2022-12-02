@@ -9,11 +9,9 @@ const Buttons = ({ handleClick, text }) => {
 };
 
 const Statistics = (props) => {
-	if (props.total === 0) {
-		return <p>No feedback given</p>;
-	}
-
+	console.log("stats ");
 	return (
+		// Does not show placeholder
 		<div>
 			<p>
 				{props.stat}: {props.value}
@@ -30,7 +28,23 @@ const App = () => {
 	const average = (good - bad) / total;
 	const positiveRatio = good / total;
 
-	// Stats in raw ( ok? ), advanced stats: sum, avg, posratio
+	if (total === 0) {
+		return (
+			<>
+				<div>
+					<h1>Score your experience</h1>
+					<Buttons handleClick={() => setGood(good + 1)} text={"Good"} />
+					<Buttons
+						handleClick={() => setNeutral(neutral + 1)}
+						text={"just ok"}
+					/>
+					<Buttons handleClick={() => setBad(bad + 1)} text={"Bad"} />
+				</div>
+				<h1>Visitor reviews</h1>
+				<p>No feedback given</p>;
+			</>
+		);
+	}
 
 	return (
 		<>
