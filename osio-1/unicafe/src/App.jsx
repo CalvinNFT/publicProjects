@@ -44,6 +44,20 @@ const Statistics = ({ content }) => {
 		</div>
 	);
 };
+const Anectode = ({ anectode, selected }) => {
+	console.log(selected, " Anectode component"); // DELETE AFTER DEV
+	return (
+		<div
+			style={{
+				margin: "5% 0%",
+				justifyContent: "space-between",
+				height: "6.5vh",
+			}}
+		>
+			<h1>{anectode[selected]}</h1>
+		</div>
+	);
+};
 
 const App = () => {
 	const [good, setGood] = useState(0);
@@ -70,6 +84,23 @@ const App = () => {
 		"Any fool can write code that a computer can understand. Good programmers write code that humans can understand. --Martin Fowler",
 		"Programming can be fun, so can cryptography; however they should not be combined. --Kreitzberg and Shneiderman ",
 	];
+	const feedback = [
+		"Ew it has plastic in it!",
+		"Such a great savings app!",
+		"But have you heard of DaySave?",
+		"! COULD NOT BELIEVE, the food was great",
+		"I forgot my student ID and the lunch lady gave me a stare, still managed to get the discount",
+		"Because I'm happy",
+		"Did you know X brings good luck and it can be random if you get them multiple times a row?",
+		"A",
+		"Yeah I just got bored",
+		"B",
+		"C",
+		"D",
+		"E",
+		"H",
+		"X",
+	];
 
 	const [selected, setSelected] = useState(0);
 
@@ -91,18 +122,11 @@ const App = () => {
 				<p>
 					Client feedback will be visible here! At the mean time, thy anecdotes
 				</p>
-				<div
-					style={{
-						margin: "5% 0%",
-						justifyContent: "space-between",
-					}}
-				>
-					<h1>{anecdotes[selected]}</h1>
-					<Buttons
-						handleClick={() => setSelected(Math.floor(Math.random() * 15))}
-						text={"Randomize me an anecdote!"}
-					/>
-				</div>
+				<Anectode anectode={anecdotes} selected={selected} />
+				<Buttons
+					handleClick={() => setSelected(Math.floor(Math.random() * 15))}
+					text={"Randomize me an anecdote!"}
+				/>
 			</>
 		);
 	}
@@ -117,6 +141,11 @@ const App = () => {
 			</div>
 			<h1>Visitor reviews</h1>
 			<Statistics content={content} />
+			<Anectode anectode={feedback} selected={selected} />
+			<Buttons
+				handleClick={() => setSelected(Math.floor(Math.random() * 15))}
+				text={"Show me feedback"}
+			/>
 		</>
 	);
 };
