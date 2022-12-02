@@ -9,19 +9,30 @@ const Buttons = ({ handleClick, text }) => {
 };
 
 const StatisticsLine = (props) => {
-	console.log(props.value, "StatisticsLine component");
+	// console.log(props.value, "StatisticsLine component"); // DELETE AFTER DEV
 	return (
-		<div>
-			<p>
-				{props.stat}: {props.value}
-			</p>
-		</div>
+		<>
+			<table>
+				<tbody>
+					<tr>
+						<td
+							style={{
+								textAlign: "left",
+								width: "100px",
+							}}
+						>
+							{props.stat}
+						</td>
+						<td>{props.value}</td>
+					</tr>
+				</tbody>
+			</table>
+		</>
 	);
 };
 
 const Statistics = ({ content }) => {
-	// not printing props, props do exist
-	console.log(content, " Statistics component");
+	// console.log(content, " Statistics component"); // DELETE AFTER DEV
 	return (
 		<div>
 			<StatisticsLine stat={"Bad"} value={content[0]} />
@@ -42,7 +53,8 @@ const App = () => {
 	const average = (good - bad) / total;
 	const positiveRatio = good / total;
 	const content = [bad, good, neutral, total, average, positiveRatio];
-	console.log(content, "App component");
+
+	// console.log(content, "App component"); // DELETE AFTER DEV
 
 	if (total === 0) {
 		return (
@@ -57,7 +69,7 @@ const App = () => {
 					<Buttons handleClick={() => setBad(bad + 1)} text={"Bad"} />
 				</div>
 				<h1>Visitor reviews</h1>
-				<p>No feedback given</p>;
+				<p>Client feedback will be visible here!</p>;
 			</>
 		);
 	}
