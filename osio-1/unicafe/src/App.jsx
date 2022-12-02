@@ -8,14 +8,28 @@ const Buttons = ({ handleClick, text }) => {
 	);
 };
 
-const Statistics = (props) => {
-	console.log("stats ");
+const StatisticsLine = (props) => {
+	console.log(props.value, "StatisticsLine component");
 	return (
-		// Does not show placeholder
 		<div>
 			<p>
 				{props.stat}: {props.value}
 			</p>
+		</div>
+	);
+};
+
+const Statistics = ({ content }) => {
+	// not printing props, props do exist
+	console.log(content, " Statistics component");
+	return (
+		<div>
+			<StatisticsLine stat={"Bad"} value={content[0]} />
+			<StatisticsLine stat={"Good"} value={content[1]} />
+			<StatisticsLine stat={"Neutral"} value={content[2]} />
+			<StatisticsLine stat={"Total"} value={content[3]} />
+			<StatisticsLine stat={"Average"} value={content[4]} />
+			<StatisticsLine stat={"Positive Ratio"} value={content[5]} />
 		</div>
 	);
 };
@@ -27,6 +41,8 @@ const App = () => {
 	const total = bad + good + neutral;
 	const average = (good - bad) / total;
 	const positiveRatio = good / total;
+	const content = [bad, good, neutral, total, average, positiveRatio];
+	console.log(content, "App component");
 
 	if (total === 0) {
 		return (
@@ -55,12 +71,7 @@ const App = () => {
 				<Buttons handleClick={() => setBad(bad + 1)} text={"Bad"} />
 			</div>
 			<h1>Visitor reviews</h1>
-			<Statistics stat={"good"} value={bad} />
-			<Statistics stat={"bad"} value={good} />
-			<Statistics stat={"neutral"} value={neutral} />
-			<Statistics stat={"total"} value={total} />
-			<Statistics stat={"average"} value={average} />
-			<Statistics stat={"positiveRatio"} value={positiveRatio} />
+			<Statistics content={content} />
 		</>
 	);
 };
