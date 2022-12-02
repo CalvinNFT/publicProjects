@@ -91,12 +91,17 @@ const App = () => {
 				<p>
 					Client feedback will be visible here! At the mean time, thy anecdotes
 				</p>
-				<div>
-					<p>{anecdotes[selected]}</p>
-					<button onClick={() => setSelected(Math.floor(Math.random() * 15))}>
-						{" "}
-						Let's hear it!
-					</button>
+				<div
+					style={{
+						margin: "5% 0%",
+						justifyContent: "space-between",
+					}}
+				>
+					<h1>{anecdotes[selected]}</h1>
+					<Buttons
+						handleClick={() => setSelected(Math.floor(Math.random() * 15))}
+						text={"Randomize me an anecdote!"}
+					/>
 				</div>
 			</>
 		);
