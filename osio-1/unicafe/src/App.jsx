@@ -9,7 +9,6 @@ const Buttons = ({ handleClick, text }) => {
 };
 
 const StatisticsLine = (props) => {
-	// console.log(props.value, "StatisticsLine component"); // DELETE AFTER DEV
 	return (
 		<>
 			<table>
@@ -32,7 +31,6 @@ const StatisticsLine = (props) => {
 };
 
 const Statistics = ({ content }) => {
-	// console.log(content, " Statistics component"); // DELETE AFTER DEV
 	return (
 		<div>
 			<StatisticsLine stat={"Bad"} value={content[0]} />
@@ -44,22 +42,27 @@ const Statistics = ({ content }) => {
 		</div>
 	);
 };
-const Anectode = ({ anectode, selected }) => {
-	console.log(selected, " Anectode component"); // DELETE AFTER DEV
+
+const Anectode = ({ votes, anectode, selected }) => {
 	return (
 		<div
 			style={{
 				margin: "5% 0%",
 				justifyContent: "space-between",
-				height: "6.5vh",
+				height: "11vh",
 			}}
 		>
 			<h1>{anectode[selected]}</h1>
+			<p>this anectode has {votes[selected]} votes.</p>
 		</div>
 	);
 };
 
 const App = () => {
+	const votes = Array(15).fill(0);
+	console.log("votes", votes);
+	const votes2 = [...votes];
+	console.log("votes2 decl", votes2);
 	const [good, setGood] = useState(0);
 	const [neutral, setNeutral] = useState(0);
 	const [bad, setBad] = useState(0);
@@ -101,10 +104,8 @@ const App = () => {
 		"H",
 		"X",
 	];
-
 	const [selected, setSelected] = useState(0);
-
-	// console.log(content, "App component"); // DELETE AFTER DEV
+	console.log("selected", selected);
 
 	if (total === 0) {
 		return (
@@ -122,11 +123,21 @@ const App = () => {
 				<p>
 					Client feedback will be visible here! At the mean time, thy anecdotes
 				</p>
-				<Anectode anectode={anecdotes} selected={selected} />
-				<Buttons
-					handleClick={() => setSelected(Math.floor(Math.random() * 15))}
-					text={"Randomize me an anecdote!"}
-				/>
+
+				<Anectode anectode={anecdotes} selected={selected} votes={votes2} />
+				<div style={{ padding: "50 0 0 0" }}>
+					<Buttons
+						handleClick={() => setSelected(Math.floor(Math.random() * 15))}
+						text={"Randomize me an anecdote!"}
+					/>
+					<Buttons
+						handleClick={() => {
+							votes2[2] += 1;
+							console.log("clicked_vote");
+						}}
+						text={"Upvote"}
+					/>
+				</div>
 			</>
 		);
 	}
@@ -140,12 +151,23 @@ const App = () => {
 				<Buttons handleClick={() => setBad(bad + 1)} text={"Bad"} />
 			</div>
 			<h1>Visitor reviews</h1>
+
 			<Statistics content={content} />
-			<Anectode anectode={feedback} selected={selected} />
-			<Buttons
-				handleClick={() => setSelected(Math.floor(Math.random() * 15))}
-				text={"Show me feedback"}
-			/>
+
+			<Anectode anectode={feedback} selected={selected} votes={votes} />
+			<div style={{ padding: "50 0 0 0" }}>
+				<Buttons
+					handleClick={() => setSelected(Math.floor(Math.random() * 15))}
+					text={"Show me feedback"}
+				/>
+				<Buttons
+					handleClick={() => {
+						votes2[2] += 1;
+						console.log("clicked_vote");
+					}}
+					text={"Upvote"}
+				/>
+			</div>
 		</>
 	);
 };
