@@ -15,20 +15,21 @@ const App = () => {
 		setPersons(persons.concat(contactObject));
 		// alert(`${newName} was added to contacts`); // TODO: DELETE BEFORE PUBLISHING, disabled for development
 		setNewName("");
+
+		// persons.filter((existingCopies) => {
+		// 	newName === persons.name;
+		// 	setExistingPersons(existingCopies);
+		// }); // yritetään luoda lista, jossa
+		// const reject =
+		// 	0.5 < existingPersons.lenght
+		// 		? alert(`${NewName} is already in your contacts`)
+		// 		: setNewName(newName);
+		// reject;
 	};
 
 	const handleChange = (event) => {
 		event.preventDefault;
 		setNewName(event.target.value);
-		persons.filter((existingCopies) => {
-			newName === persons.name;
-			setExistingPersons(existingCopies);
-		}); // yritetään luoda lista, jossa
-		const reject =
-			0.5 < existingPersons.lenght
-				? alert(`${NewName} is already in your contacts`)
-				: setNewName(newName);
-		reject;
 	};
 
 	return (
