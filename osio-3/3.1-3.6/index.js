@@ -34,6 +34,16 @@ app.get('/info', (req, res) => {
 app.get('/', (req, res) => {
     res.send(`<h1>Looking for someone? Check info</h1>`)
 })
+app.get('/api/persons/:id', (req, res) => {
+  let id = Number(req.params.id)
+  let person = persons.find(person => person.id === id)
+
+  if (person) {
+    res.json(person)
+  } else {
+    res.status(404).end()
+  }
+})
 
 // app.get('/api/persons/:id', (request, response) => {
 //     const id = Number(request.params.id)
