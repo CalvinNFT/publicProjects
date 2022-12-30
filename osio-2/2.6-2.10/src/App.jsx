@@ -56,14 +56,20 @@ const App = () => {
 		action;
 		setNewName("no name saved");
 	};
+	const submitSearch = (event) => {
+		// const searchObject // ? Tarviiko
+		event.preventDefault();
+		setSearch(event.target.value);
+	};
 
 	const handleChange = (event) => {
-		event.preventDefault;
 		setNewName(event.target.value);
 	};
 	const handleMobileChange = (event) => {
-		event.preventDefault;
 		setNewMobile(event.target.value);
+	};
+	const handleSearchChange = (event) => {
+		setNewSearch(event.target.value); // newSearch ja search erikseen eli voi hakea ja sit submittaa.
 	};
 
 	const searchId = persons.findIndex((person) => person.name === search);
@@ -72,6 +78,13 @@ const App = () => {
 		<div>
 			<h1>Phonebook</h1>
 			<h2>Search</h2>
+			<div>
+				<form onSubmit={submitSearch}>
+					Search by name:{" "}
+					<input value={newSearch} onChange={handleSearchChange} />
+					<button type="submit">search</button>
+				</form>
+			</div>
 			<h2>Add new</h2>
 			<form onSubmit={addContact}>
 				<div>
