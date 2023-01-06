@@ -1,8 +1,5 @@
-console.log("initial, hello world");
-
 const express = require('express')
 const app = express()
-
 app.use(express.json())
 
 let persons = [
@@ -57,6 +54,29 @@ app.delete('/api/persons/:id', (req,res) => {
   console.log('person deleted');
   persons = persons.filter(person => person.id !== id)
   res.status(204).end()
+})
+
+const generateId = () => Number(Math.floor(Math.random() * 9000))
+
+app.post('/api/persons', (req, res) => {
+  const body = req.body
+
+  console.log('_______REQUEST BODY:', req.body);
+
+  if (!body.number) 
+  { return res.status(409).json({error: "content missing"})} 
+
+  const person = {
+    name: body.name || "No name saved",
+    number: body.number,
+    id: generateId()
+  }
+  
+ persons = persons.concat(person)
+  
+
+ res.json(person)
+
 })
 
 const PORT = 3001
