@@ -1,7 +1,9 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 app.use(express.json())
 
+app.use(morgan('tiny'))
 let persons = [
     {
       id: 1,
@@ -21,13 +23,6 @@ let persons = [
   ]
 
 const date = new Date
-let personsTotal = persons.length
-console.log('length of array', personsTotal)
-
-
-app.get('/info', (req, res) => {
-    res.send(`<h1>Contactbook has ${personsTotal} people</h1> <br /><br /> <p>${date}</p>`)
-})
 
 app.get('/', (req, res) => {
     res.send(`<h1>Looking for someone? Check info</h1>`)
@@ -78,6 +73,12 @@ app.post('/api/persons', (req, res) => {
   }
   return res.status(418).json({error: "This person is already in your contact, please provide an unique name for a new contact"}).end()
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
