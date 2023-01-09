@@ -6,16 +6,30 @@ const Contact = ({ person }) => (
 	</li>
 );
 
-const Phonebook = ({ persons }) => {
-	return (
-		<ul>
-			{persons.map((person, i) => (
-				// added indexing to enable contacts with same names
-				<Contact person={person} key={person.name + i} />
-			))}
-		</ul>
-	);
-};
+const NewContact = (props) => (
+	<>
+		<form onSubmit={props.addContact}> 
+			<div>
+				name: <input value={props.newName} onChange={props.handleChange} />
+			</div>
+			<div>
+				number: <input value={props.newMobile} onChange={props.handleMobileChange} />
+			</div>
+			<div>
+				<button type="submit">add</button>
+			</div>
+		</form>
+	</>
+)
+
+const ShowedContacts = (props) => (
+	<ul>
+		{props.personsToShow.map((person, i) => (
+			<Contact person={person} key={person.name + i} />
+		))}
+	</ul>
+)
+
 
 const App = () => {
 	const [persons, setPersons] = useState([
@@ -26,8 +40,13 @@ const App = () => {
 	]);
 	const [newName, setNewName] = useState("no name saved");
 	const [newMobile, setNewMobile] = useState("no number saved");
-	const [search, setSearch] = useState("Calvin Klein");
+	const [search, setSearch] = useState("");
+	const [newSearch, setNewSearch] = useState("");
 
+	const personsToShow = search
+		? persons.filter((person) => person.name === search)
+		: persons
+	
 	const addContact = (event) => {
 		event.preventDefault();
 		const contactObject = {
@@ -57,9 +76,9 @@ const App = () => {
 		setNewName("no name saved");
 	};
 	const submitSearch = (event) => {
-		// const searchObject // ? Tarviiko
 		event.preventDefault();
-		setSearch(event.target.value);
+		setSearch(newSearch);
+		setNewSearch("")
 	};
 
 	const handleChange = (event) => {
@@ -69,11 +88,9 @@ const App = () => {
 		setNewMobile(event.target.value);
 	};
 	const handleSearchChange = (event) => {
-		setNewSearch(event.target.value); // newSearch ja search erikseen eli voi hakea ja sit submittaa.
+		setNewSearch(event.target.value);
 	};
 
-	const searchId = persons.findIndex((person) => person.name === search);
-	const isSearched = <li>{persons[searchId].name}</li>;
 	return (
 		<div>
 			<h1>Phonebook</h1>
@@ -86,25 +103,12 @@ const App = () => {
 				</form>
 			</div>
 			<h2>Add new</h2>
-			<form onSubmit={addContact}>
-				<div>
-					name: <input value={newName} onChange={handleChange} />
-				</div>
-				<div>
-					number: <input value={newMobile} onChange={handleMobileChange} />
-				</div>
-				<div>
-					<button type="submit">add</button>
-				</div>
-			</form>
+			{/* // TODO componentti */}
+			<NewContact addContact={addContact} newName={newName} handleChange={handleChange} newMobile={newMobile} handleMobileChange={handleMobileChange} />
 			<h2>Numbers</h2>
-			<h3>
-				MVP is:
-				<ul>{isSearched}</ul>
-			</h3>
-			<Phonebook persons={persons} search={search} />
+			<ShowedContacts personsToShow={personsToShow} />
 		</div>
 	);
-};
 
+};
 export default App;
