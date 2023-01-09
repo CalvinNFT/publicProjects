@@ -61,22 +61,22 @@ const generateId = () => Number(Math.floor(Math.random() * 9000))
 app.post('/api/persons', (req, res) => {
   const body = req.body
 
-  console.log('_______REQUEST BODY:', req.body);
+  if (!body.number || !body.name) 
+  { return res.status(409).json({error: "a new contact must include a name and a number"})}
 
-  if (!body.number) 
-  { return res.status(409).json({error: "content missing"})} 
+  if (!persons.find((person) => person.name === body.name)) // find if name is already saved
+  { 
+  
+    const person = {
+      name: body.name,
+      number: body.number,
+      id: generateId()
+    }
+   persons = persons.concat(person)
+   res.json(person)
 
-  const person = {
-    name: body.name || "No name saved",
-    number: body.number,
-    id: generateId()
   }
-  
- persons = persons.concat(person)
-  
-
- res.json(person)
-
+  return res.status(418).json({error: "This person is already in your contact, please provide an unique name for a new contact"}).end()
 })
 
 const PORT = 3001
