@@ -12,3 +12,9 @@ Content-Type: application/json
 
 ### info
 GET http://localhost:3001/
+
+### Nasdaq test
+GET https://data.nasdaq.com/api/v3/datasets/OPEC/ORB.csv?collapse=none
+
+### EOD Historical data test
+GET https://eodhistoricaldata.com/api/intraday/NOKIA.HE?api_token=63c142a45fb6f2.28224730&interval=1m&fmt=json
